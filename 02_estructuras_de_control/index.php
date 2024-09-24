@@ -22,19 +22,24 @@
                 <th>Página</th>
                 <th>Contenido</th>
             </tr>
-
         </thead>
     <tbody>
         <tr>
             <td><a href="numeros.php">numeros.php</a></td>
-            <td>Ejercicios de comparaciones con números</td>
-
+            <td>Ejercicios con números</td>
         </tr>
-        <tr>
 
+        <tr>
         <td>
         <a href="fechas.php">fechas.php</a>
         </td>
+        <td>Ejercicios con fechas</td>
+
+        
+        </tr>
+        <tr>
+        <td><a href="swicht.php">swicht.php</a></td>
+        <td>Ejercicios con swicht</td>
         </tr>
 
     </tbody>

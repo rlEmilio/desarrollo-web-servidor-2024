@@ -9,6 +9,10 @@
     <?php
     echo date("W");
 
+    $dia = date("l");
+    
+    echo("<h1>Hoy es: $dia</h1>");
+
     //~numero % 4
 
 
@@ -18,7 +22,22 @@
         echo"<p>El dia es impar</p>";
     }
 
-    echo date("P");
+    /*Hacer un switch que muestre por pantalla si hoy hay clases de web <servidor></servidor>*/
+
+    switch($dia){
+    
+        case "Tuesday":
+        case "Wednesday":
+        case "Friday":
+            echo("Hoy Si hay servidor");
+            break;
+        default: 
+            echo("Hoy no hay servidor");
+
+
+            
+    }
+   
     ?>
 
 
