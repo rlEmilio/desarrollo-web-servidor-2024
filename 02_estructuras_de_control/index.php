@@ -42,6 +42,17 @@
         <td>Ejercicios con swicht</td>
         </tr>
 
+        </tr>
+        <tr>
+        <td><a href="listas.php">listas.php</a></td>
+        <td>Bucles</td>
+        </tr>
+
+        <tr>
+        <td><a href="ejercicio1.php">Ejercicio1.php</a></td>
+        <td>Ejercicio</td>
+        </tr>
+
     </tbody>
 
     </table>

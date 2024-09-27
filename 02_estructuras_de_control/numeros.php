@@ -29,7 +29,7 @@ if($numero<0){
 }
 */
 
-$numero =20;
+/*$numero =20;*/
 #rangos: [-10,0) [0,10] (10,20]
 
 /*if($numero >= -10 && $numero <0){
@@ -61,7 +61,7 @@ numero2=4
 escribir un if que decida cual de los dos es mayor o si son iguales.
 */
 
-$numero1=9;
+/*$numero1=9;
 $numero2=-6;
 if($numero1 > $numero2){
     echo"<p>El número $numero1 es mayor que el número $numero2 </p>";
@@ -78,7 +78,10 @@ elseif($numero1 < $numero2):
 else:
      echo"<p>Los nuḿeros son iguales</p>";
 
-endif;
+endif;*/
+
+
+
 
 
 

@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-    echo date("W");
+   /* echo date("W");
 
     $dia = date("l");
     
@@ -22,7 +22,7 @@
         echo"<p>El dia es impar</p>";
     }
 
-    /*Hacer un switch que muestre por pantalla si hoy hay clases de web <servidor></servidor>*/
+    /*Hacer un switch que muestre por pantalla si hoy hay clases de web <servidor></servidor>
 
     switch($dia){
     
@@ -34,11 +34,12 @@
         default: 
             echo("Hoy no hay servidor");
 
+ }*/
 
-            
-    }
-   
+
+
     ?>
+
 
 
 </body>
