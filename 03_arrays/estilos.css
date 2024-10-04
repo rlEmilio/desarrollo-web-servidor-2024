@@ -1,0 +1,20 @@
+table, th, td{
+    border: 1px solid black;
+    
+}
+
+th{
+    background-color:blue;
+}
+
+.aprobado{
+background-color: rgb(0, 190, 0);
+
+}
+
+
+.suspendido{
+    background-color: red ;
+}
+
+
