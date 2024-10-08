@@ -43,13 +43,63 @@
     array_push($notas, "Jose", "Despliegue web");
 
    
-    unset($notas[4]);
-    print_r($notas);
-
-
-        ?>
+    //unset($notas[4]);
 
 
 
+for($i = 0; $i < count($notas); $i++){
+    $notas[$i][2]= rand(1,10);
+    if($notas[$i][2]<5){
+        $notas[$i][3]="NO APTO";
+    }else if($notas[$i][2]>=5){
+        $notas[$i][3]="APTO";
+    }
+}
+    ?>
+
+<table>
+
+    <thead>
+        <tr>
+        <th>Nombre</th>
+        <th>Asignatura</th>
+        <th>Notas</th>
+        <th>Apto</th>
+
+
+        </tr>
+
+
+    </thead>
+
+
+    <tbody>
+
+
+<?php
+
+    foreach($notas as $nota){
+        list($nombre, $asignatura, $notas, $apto) = $nota;    ?>
+
+        <tr>
+        <td><?php echo $nombre  ?></td>
+        <td><?php echo $asignatura  ?></td>
+        <td><?php echo $notas  ?></td>
+        <td><?php echo $apto  ?></td>
+
+        </tr>
+
+  <?php
+  }
+  ?>
+    
+
+    
+
+      
+   
+
+    </tbody>
+</table>
 </body>
 </html>
