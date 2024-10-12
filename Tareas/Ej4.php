@@ -22,6 +22,9 @@ Se convertirán los 10 CELSIUS a su equivalente en FAHRENHEIT.
 
 En los select se podrá elegir entre: CELSIUS, KELVIN y FAHRENHEIT.-->
 
+
+
+
 <form action="" method="post">
     <input type="number" name="temperatura">
     <select name="unidades" id="unidades">
@@ -50,6 +53,9 @@ $_temperatura = $_POST["temperatura"];
 $_unidad = $_POST["unidades"];
 $_conversion = $_POST["conversion"];
 
+if($_unidad == "CELSIUS" $$ $_conversion == "KELVIN" ){
+    echo("La temperatura de "$temperatura." grados celsius equivale a ".($temperatura+273.15). " grados kelvin");
+}
 
 }
 
