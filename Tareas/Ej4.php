@@ -23,9 +23,10 @@ Se convertirán los 10 CELSIUS a su equivalente en FAHRENHEIT.
 En los select se podrá elegir entre: CELSIUS, KELVIN y FAHRENHEIT.-->
 
 
-
+<h2>Conversor de temperaturas to wapo</h2>
 
 <form action="" method="post">
+    <label for="temperatura">Temperatura</label>
     <input type="number" name="temperatura">
     <select name="unidades" id="unidades">
         <option value="CELSIUS">CELSIUS</option>
@@ -37,6 +38,7 @@ En los select se podrá elegir entre: CELSIUS, KELVIN y FAHRENHEIT.-->
         <option value="KELVIN">KELVIN</option>
         <option value="FAHRENHEIT">FAHRENHEIT</option>   
     </select> 
+    <input type="submit" value="Enviar">
 
 </form>
 
@@ -52,13 +54,25 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 $_temperatura = $_POST["temperatura"];    
 $_unidad = $_POST["unidades"];
 $_conversion = $_POST["conversion"];
+$respuesta ="";
+match (true) {
+    $_unidad == "CELSIUS" && $_conversion == "KELVIN" => $respuesta=  $_temperatura." grados CELSIUS equivalen a ".(int)(($_temperatura+273.15))." grados KELVIN" ,
+    $_unidad == "CELSIUS" && $_conversion == "FAHRENHEIT" => $respuesta=  $_temperatura." grados CELSIUS equivalen a ".(int)(($_temperatura*9/5)+32)." grados FAHRENHEIT" ,
+    $_unidad == "KELVIN" && $_conversion == "CELSIUS" => $respuesta=  $_temperatura." grados KELVIN equivalen a ".(int)(273.15-$_temperatura)." grados CELSIUS" ,
+    $_unidad == "KELVIN" && $_conversion == "FAHRENHEIT" => $respuesta=  $_temperatura." grados KELVIN equivalen a ".(int)(($_temperatura-273.15)*(9/5)+32)." grados FAHRENHEIT" ,
+    $_unidad == "FAHRENHEIT" && $_conversion == "CELSIUS" => $respuesta=  $_temperatura." grados FAHRENHEIT equivalen a ".(int)(($_temperatura-32)*(5/9))." grados CELSIUS" ,
+    $_unidad == "FAHRENHEIT" && $_conversion == "KELVIN" => $respuesta=  $_temperatura." grados FAHRENHEIT equivalen a ".(int)(($_temperatura-32)*(5/9)+273.15)." grados KELVIN" ,
+    //si se eligen las mismas unidades
+    default => $respuesta = "Por favor, elija una unidad de medida diferente para realizar la conversión",
+ 
+ 
+   
+};
 
-if($_unidad == "CELSIUS" $$ $_conversion == "KELVIN" ){
-    echo("La temperatura de "$temperatura." grados celsius equivale a ".($temperatura+273.15). " grados kelvin");
+echo "<br><br>";
+echo $respuesta;
+
 }
-
-}
-
 ?>
 
 
