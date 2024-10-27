@@ -21,9 +21,9 @@
             $_tmp_apellidos = $_POST["apellidos"];
             $_tmp_nacimiento = $_POST["nacimiento"];
 
-$error_usuario;
-$error_nombre;
-$error_fecha;
+$error_usuario="";
+$error_nombre="";
+$error_fecha="";
 $patron;
 
             if($_tmp_usuario == ""){
@@ -31,7 +31,7 @@ $patron;
             }
             else{
                 $patron = "/^[a-zA-Z0-9_]{4,12}$/";
-                echo preg_match($patron, $_tmp_usuario);
+               
                 if(!preg_match($patron, $_tmp_usuario)){
                     $error_usuario = "El usuario debe tener 4 a 12 caracteres y
                     contener letras, números o barrabaja";
@@ -49,7 +49,7 @@ $patron;
                 if(strlen($_tmp_nombre) < 2 || strlen($_tmp_nombre) > 30){
                     $error_nombre = "El nombre tiene que tener entre 2 y 30 carácteres";
                 }else{
-                    $patron ="/^[a-zA-Z\ áéíóúÁÉÍÓÚ]$/";
+                    $patron ="/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/";
                     if(!preg_match($patron, $_tmp_nombre)){
                         $error_nombre = "El nombre solo puede contener letras o espacios en blanco";
                     }else{
@@ -71,20 +71,25 @@ $patron;
                     list($ano_actual,$mes_actual,$dia_actual) = explode('-',$fecha_actual);
 
                     list($ano_usuario,$mes_usuario,$dia_usuario) = explode('-',$_tmp_nacimiento);
-                    echo $ano_usuario;
+        
 
-                    if($ano_actual - $ano_usuario > 120) {
-                        echo "hola";
-                        if($mes_actual < $mes_usuario ){
-                            echo "adios";
-                            if($dia_actual <= $dia_usuario ){ //si ya ha cumplido
-                                echo "<h2>Eres un momia</h2>";
+
+                    if($ano_actual - $ano_usuario >= 121) {           //si han pasado mas de 120 años el usuario ha cumplido 121
+                        $error_fecha = "Tienes mas de 120 años";
+                    }else{
+                        if($ano_actual - $ano_usuario == 120 ){       //si han pasado exactamente 120 años hay que comprobar los meses
+                            if($mes_actual > $mes_usuario){           //si el mes actual es mayor que el mes de nacimiento el usuario ha cumplido 121
+                                $error_fecha = "Tienes mas de 120 años";
+                            }else{                                  
+                                if($mes_actual==$mes_usuario){        //si los meses son iguales, comprobar los dias
+                                    if($dia_actual > $dia_usuario){   //si el dia actual es mayor que el dia de nacimiento el usuario ha cumplido 121
+                                        $error_fecha = "Tienes mas de 120 años";
+                                    }
+                                }
                             }
                         }
                     }
-                    else{
-                        $fecha = $_tmp_nacimiento;
-                    }
+                    
                     
                 }
             }

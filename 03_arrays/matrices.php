@@ -77,6 +77,7 @@
             }
           }
 
+          unset($videojuegos[2]);
 
         foreach($videojuegos as $videojuego){
             echo("<tr>");

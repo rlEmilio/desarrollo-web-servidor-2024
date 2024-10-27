@@ -174,25 +174,7 @@ print_r($frutas);*/
 <tbody>
 <?php
 
-foreach($personas as $clave => $ele){?>
-   <tr>
 
-    <td>
-        <?php
-        echo ("$clave");
-        ?>
-    </td>
-    <td>
-        <?php
-        echo ("$ele");
-        ?>
-    </td>
-   </tr>
-
-   <?php
-
-   
-}?>
 
 
 

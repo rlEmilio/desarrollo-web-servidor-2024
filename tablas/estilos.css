@@ -1,0 +1,18 @@
+
+
+
+.aprobado td{
+    background-color: greenyellow;
+}
+
+.suspenso td{
+    background-color: red;
+}
+
+.notable td{
+    background-color: rgb(15, 201, 15);
+}
+
+.sobresaliente td{
+    background-color: rgb(0, 225, 255);
+}
