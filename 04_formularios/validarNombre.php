@@ -9,6 +9,10 @@
     <?php
     error_reporting( E_ALL );
     ini_set( "display_errors", 1 );
+    $error_usuario="";
+    $error_nombre="";
+    $error_fecha="";
+    $patron;
     ?>
 </head>
 <body>
@@ -21,10 +25,7 @@
             $_tmp_apellidos = $_POST["apellidos"];
             $_tmp_nacimiento = $_POST["nacimiento"];
 
-$error_usuario="";
-$error_nombre="";
-$error_fecha="";
-$patron;
+
 
             if($_tmp_usuario == ""){
                 $error_usuario = "El usuario no puede estar vacío";
