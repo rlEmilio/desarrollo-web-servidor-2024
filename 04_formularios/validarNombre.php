@@ -73,7 +73,7 @@
 
                     list($ano_usuario,$mes_usuario,$dia_usuario) = explode('-',$_tmp_nacimiento);
         
-
+                    
 
                     if($ano_actual - $ano_usuario >= 121) {           //si han pasado mas de 120 años el usuario ha cumplido 121
                         $error_fecha = "Tienes mas de 120 años";
