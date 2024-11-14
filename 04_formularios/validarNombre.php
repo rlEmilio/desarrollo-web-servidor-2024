@@ -9,6 +9,10 @@
     <?php
     error_reporting( E_ALL );
     ini_set( "display_errors", 1 );
+    $error_usuario="";
+    $error_nombre="";
+    $error_fecha="";
+    $patron;
     ?>
 </head>
 <body>
@@ -21,10 +25,7 @@
             $_tmp_apellidos = $_POST["apellidos"];
             $_tmp_nacimiento = $_POST["nacimiento"];
 
-$error_usuario="";
-$error_nombre="";
-$error_fecha="";
-$patron;
+
 
             if($_tmp_usuario == ""){
                 $error_usuario = "El usuario no puede estar vacío";
@@ -72,7 +73,7 @@ $patron;
 
                     list($ano_usuario,$mes_usuario,$dia_usuario) = explode('-',$_tmp_nacimiento);
         
-
+                    
 
                     if($ano_actual - $ano_usuario >= 121) {           //si han pasado mas de 120 años el usuario ha cumplido 121
                         $error_fecha = "Tienes mas de 120 años";
