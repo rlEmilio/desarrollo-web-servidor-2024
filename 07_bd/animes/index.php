@@ -30,10 +30,12 @@
     
     
     <?php
-    $sql = "select * from animes";
-    $resultado = $_conexion -> query($sql);
+    $sql1 = "select * from animes";
+    $resultado1 = $_conexion -> query($sql1);
 
     ?>
+
+    <a href="nuevo_anime.php">Nuevo anime</a>
 
 <table class="table table-striped table-dark">
     <head>
@@ -48,13 +50,49 @@
 
     <tbody>
         <?php
-            while($fila = $resultado -> fetch_assoc()){
+            while($fila = $resultado1 -> fetch_assoc()){
 
                 echo("<tr>");
                 echo("<td>" .$fila["titulo"] ."</td>");
                 echo("<td>" .$fila["nombre_estudio"] ."</td>");
                 echo("<td>" .$fila["anno_estreno"] ."</td>");
                 echo("<td>" .$fila["num_temporadas"] ."</td>");
+                echo("</tr>");
+
+            }
+        ?>
+
+
+ 
+<?php
+    $sql2 = "select * from estudios";
+    $resultado2 = $_conexion -> query($sql2);
+
+    ?>
+
+
+<table class="table table-striped table-dark">
+    <head>
+    <br><br>
+    <h2>Estudios</h2>
+        <tr>
+            <th>Nombre</th>
+            <th>Ciudad</th>
+            <th>Año de creacion</th>
+
+        </tr>
+
+    </head>
+
+    <tbody>
+        <?php
+            while($fila = $resultado2 -> fetch_assoc()){
+
+                echo("<tr>");
+                echo("<td>" .$fila["nombre_estudio"] ."</td>");
+                echo("<td>" .$fila["ciudad"] ."</td>");
+                echo("<td>" .$fila["anno_fundacion"] ."</td>");
+                
                 echo("</tr>");
 
             }

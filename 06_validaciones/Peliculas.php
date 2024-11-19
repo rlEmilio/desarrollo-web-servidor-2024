@@ -1,32 +1,4 @@
 
-<!--
-Ejercicio de Validación en PHP: Registro de Películas
-
-Desarrolla un formulario en HTML y PHP para registrar información sobre películas, asegurándote de realizar validaciones en los campos ingresados por el usuario. El formulario deberá tener los siguientes campos:
-
-    Título (campo de texto):
-        Es un campo obligatorio.
-        Debe tener entre 1 y 100 caracteres.
-        Solo puede contener letras, números y espacios en blanco.
-
-    Género (lista de selección):
-        Opciones: acción, comedia, drama, ciencia ficción, romance, documental.
-        Es un campo obligatorio.
-        Debe seleccionarse uno de los géneros válidos.
-
-    Descripción (área de texto):
-        Máximo 500 caracteres.
-        Puede contener letras, números, espacios, puntos y comas.
-
-    Fecha de Estreno (campo de fecha):
-        Es un campo obligatorio.
-        Debe estar en formato "YYYY-MM-DD".
-        La fecha debe ser posterior a 1900 y no puede ser mayor a la fecha actual.
-
-    Duración (campo numérico):
-        Es un campo obligatorio.
-        Debe ser un número entre 1 y 300 (expresado en minutos). -->
-
 
 
 <!DOCTYPE html>
