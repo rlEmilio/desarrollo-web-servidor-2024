@@ -20,6 +20,19 @@
 
 
 <?php
+
+
+$sql = "select * from estudios order by nombre_estudio";
+$resultado = $_conexion -> query($sql);
+$estudios = []; 
+
+
+while($fila = $resultado -> fetch_assoc() ){
+    array_push($estudios, $fila["nombre_estudio"]);
+}
+
+
+
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         $titulo = $_POST["titulo"];
         $estudio = $_POST["estudio"];
