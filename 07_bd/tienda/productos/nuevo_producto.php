@@ -41,6 +41,7 @@
                 $tmp_nombre = $_POST["nombre"];
                 $tmp_precio = $_POST["precio"];
                 $tmp_categoria = $_POST["categoria"];
+                var_dump($tmp_categoria);
                 $stock = $_POST["stock"];
                 $descripcion = $_POST["descripcion"];
                
@@ -89,18 +90,25 @@
                
 
                 //------CATEGORIA------
+
+                
                 if(empty($tmp_categoria)) { 
                    $categoria = 'Alimentacion';  //le pongo esta por defecto, que existe en la bd
                    $error_categoria = "Por favor, elija una categoría";
                 } else {
-                    $categoria = $tmp_categoria; 
-                    $contador++;
+                    if(in_array($tmp_categoria, $categorias)){
+                        $categoria = $tmp_categoria; 
+                        $contador++;
+                    }
+                    else{
+                        $error_categoria = "la categoria no existe";
+                    }
                 }
 
 
 
                 var_dump($contador);
-                var_dump($categoria);
+                var_dump($categorias);
 
                
                 if($contador == 5){
