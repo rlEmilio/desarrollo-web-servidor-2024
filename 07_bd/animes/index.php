@@ -4,107 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <?php
-    error_reporting( E_ALL );
-    ini_set( "display_errors", 1 );
-
-    require("configuracion.php");
-    ?>
-
-
-<style>
-
-     th, td{
-        border: 1px solid black;
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 ); 
         
-    }
-</style>
+        require('conexion.php');
 
+        session_start();
+        if(!isset($_SESSION["usuario"])){
+            header("location: usuario/iniciar_sesion.php");
+            exit;
+        }
+    ?>
+    <style>
+        .table-primary {
+            --bs-table-bg: #b0008e;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    
-
-<div class="container">
-    
-    
-    <?php
-    $sql1 = "select * from animes";
-    $resultado1 = $_conexion -> query($sql1);
-
-    ?>
-
-    <a href="nuevo_anime.php">Nuevo anime</a>
-
-<table class="table table-striped table-dark">
-    <head>
-        <tr>
-            <th>Titulo</th>
-            <th>Estudio</th>
-            <th>Año</th>
-            <th>Número de temporadas</th>
-        </tr>
-
-    </head>
-
-    <tbody>
+    <div class="container">
+        <h2>Bienvenido <?php echo $_SESSION["usuario"] ?></h2>
+        <h1>Listado de animes</h1>
         <?php
-            while($fila = $resultado1 -> fetch_assoc()){
 
-                echo("<tr>");
-                echo("<td>" .$fila["titulo"] ."</td>");
-                echo("<td>" .$fila["nombre_estudio"] ."</td>");
-                echo("<td>" .$fila["anno_estreno"] ."</td>");
-                echo("<td>" .$fila["num_temporadas"] ."</td>");
-                echo("</tr>");
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id_anime = $_POST["id_anime"];
+        //echo "<h1>$id_anime </h1>";
+        $sql = "delete from animes where id_anime = '$id_anime'";
+        $_conexion -> query($sql);
 
-            }
+    }
+
+            $sql = "SELECT * FROM animes";
+            $resultado = $_conexion -> query($sql);
         ?>
+        <a class="btn btn-secondary" href="nuevo_anime.php">Nuevo anime</a><br><br>
 
+        <a class="btn btn-danger" href="./usuario/cerrar_sesion.php">Cerrar sesión</a><br><br>
 
- 
-<?php
-    $sql2 = "select * from estudios";
-    $resultado2 = $_conexion -> query($sql2);
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Título</th>
+                    <th>Estudio</th>
+                    <th>Año</th>
+                    <th>Número de temporadas</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <?php
+                    while($fila = $resultado -> fetch_assoc()) {
+                        // ["titulo"=>"Frieren","nombre_estudio"="Pierrot"...]
+                        echo "<tr>";
+                        echo "<td>" . $fila["titulo"] . "</td>";
+                        echo "<td>" . $fila["nombre_estudio"] . "</td>";
+                        echo "<td>" . $fila["anno_estreno"] . "</td>";
+                        echo "<td>" . $fila["num_temporadas"] . "</td>";
+                        ?>
+                        <td>
+                            <img width="100" heigth="100" src="<?php echo $fila["imagen"] ?>">
+                        </td>
 
-    ?>
-
-
-<table class="table table-striped table-dark">
-    <head>
-    <br><br>
-    <h2>Estudios</h2>
-        <tr>
-            <th>Nombre</th>
-            <th>Ciudad</th>
-            <th>Año de creacion</th>
-
-        </tr>
-
-    </head>
-
-    <tbody>
-        <?php
-            while($fila = $resultado2 -> fetch_assoc()){
-
-                echo("<tr>");
-                echo("<td>" .$fila["nombre_estudio"] ."</td>");
-                echo("<td>" .$fila["ciudad"] ."</td>");
-                echo("<td>" .$fila["anno_fundacion"] ."</td>");
-                
-                echo("</tr>");
-
-            }
-        ?>
-
-
-    </tbody>
-
-
-</table>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                        <td>
+                            <form action="" method="post">
+                                <input type="hidden" name="id_anime" value="<?php echo $fila["id_anime"] ?>">
+                                <input  class="btn btn-danger" type="submit" value="borrar">
+                            </form>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="editar_animes.php?id_anime=<?php echo $fila["id_anime"]?>">Editar anime</a>
+                        </td>
+                        <?php 
+                        echo "</tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

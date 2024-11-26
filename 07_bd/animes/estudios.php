@@ -31,7 +31,7 @@ $sql = "INSERT INTO estudios
 (nombre_estudio, ciudad, anno_fundacion)
 VALUES
 ('$nombre', '$ciudad', '$anno')";
-
+ 
 
 $_conexion -> query($sql);
     }
