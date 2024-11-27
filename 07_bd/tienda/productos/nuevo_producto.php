@@ -41,9 +41,9 @@
                 $tmp_nombre = $_POST["nombre"];
                 $tmp_precio = $_POST["precio"];
                 $tmp_categoria = $_POST["categoria"];
-                var_dump($tmp_categoria);
-                $stock = $_POST["stock"];
-                $descripcion = $_POST["descripcion"];
+               // var_dump($tmp_categoria);
+                $tmp_stock = $_POST["stock"];
+                $tmp_descripcion = $_POST["descripcion"];
                
                 // $_FILES, QUE ES UN ARRAY DOBLE!!!
                 $direccion_temporal = $_FILES["imagen"]["tmp_name"];
@@ -89,9 +89,7 @@
                 }
                
 
-                //------CATEGORIA------
-
-                
+                //------CATEGORIA------  
                 if(empty($tmp_categoria)) { 
                    $categoria = 'Alimentacion';  //le pongo esta por defecto, que existe en la bd
                    $error_categoria = "Por favor, elija una categoría";
@@ -107,10 +105,41 @@
 
 
 
-                var_dump($contador);
-                var_dump($categorias);
+                //var_dump($contador);
+                //var_dump($categorias);
 
+               //---------STOCK-------
+               if(!empty($tmp_stock)){
+                //si no esta vacio puede contener una cosa que no sea numero
+                //tengo que validar que sea int
+                    if (filter_var($tmp_stock, FILTER_VALIDATE_INT)===false){
+                        $error_stock = "El stock debe ser un numero entero";
+                    }else{
+                        $stock = $tmm_stock;
+                    }
+                } else{
+                    $stock = 0;
+                }
                
+
+                //------DESCRIPCION---------    
+                if(empty($tmp_descripcion)){
+                    $error_descripcion = "la descripción no puede estar vacía";
+                }else{
+                    if(strlen($tmp_descripcion) > 255){
+                        $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
+                    }else{
+                        $descripcion = $tmp_descripcion;
+
+                    }
+                }
+             
+        
+
+                
+
+
+
                 if($contador == 5){
                     $sql = "INSERT INTO producto 
                     (nombre, precio, categoria, stock, imagen, descripcion)
@@ -156,10 +185,12 @@
             <div class="mb-3">
                 <label class="form-label">Stock</label>
                 <input class="form-control" name="stock" type="text">
+                <?php if(isset($error_stock)) echo "<span class='error'>$error_stock</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" name="descripcion" type="text">
+                <?php if(isset($error_descripcion)) echo "<span class='error'>$error_descripcion</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Imagen</label>

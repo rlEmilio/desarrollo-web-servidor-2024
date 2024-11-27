@@ -43,7 +43,7 @@
         ?>
         <a class="btn btn-secondary" href="nuevo_anime.php">Nuevo anime</a><br><br>
 
-        <a class="btn btn-danger" href="./usuario/cerrar_sesion.php">Cerrar sesión</a><br><br>
+        <a class="btn btn-danger" href="usuario/cerrar_sesion.php">Cerrar sesión</a><br><br>
 
         <table class="table table-striped">
             <thead class="table-primary">
