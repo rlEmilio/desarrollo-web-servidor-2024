@@ -11,38 +11,24 @@
         
         require('../util/conexion.php');
     ?>
+
+<style>
+        .container{
+            max-width: 500px;
+        }
+
+      
+      
+      .error{
+          color:red;
+      }
+
+
+    </style>
 </head>
 <body>
     <div class="container">
         <?php
-            if($_SERVER["REQUEST_METHOD"] == "POST") {
-                $id_producto = $_POST["id_producto"];
-                $nombre = $_POST["nombre"];
-                $precio = $_POST["precio"];
-                $categoria = $_POST["categoria"];
-                $stock = $_POST["stock"];
-                $descripcion = $_POST["descripcion"];
-        
-
-                $direccion_temporal = $_FILES["imagen"]["tmp_name"];
-                $nombre_imagen = $_FILES["imagen"]["name"];
-                move_uploaded_file($direccion_temporal, "../imagenes/$nombre_imagen");
-
-                $sql = "UPDATE producto SET
-                            nombre = '$nombre',
-                            precio = $precio,
-                            categoria = '$categoria',
-                            stock = $stock,
-                            descripcion = '$descripcion',
-                            imagen = '../imagenes/$nombre_imagen'
-                        WHERE id_producto = $id_producto";
-
-                $_conexion -> query($sql);
-
-                if (!$_conexion->query($sql)) {
-                    echo "Error en la consulta: " . $_conexion->error;
-                }
-            }
 
             $sql = "SELECT * FROM categoria ORDER BY categoria";
             $resultado = $_conexion -> query($sql);
@@ -53,6 +39,136 @@
                 array_push($categorias, $fila["categoria"]);
             }
 
+
+            if($_SERVER["REQUEST_METHOD"] == "POST") {
+                var_dump($_POST);
+                $id_producto = $_POST["id_producto"];
+                $tmp_nombre = $_POST["nombre"];
+                $tmp_precio = $_POST["precio"];
+                $tmp_categoria = $_POST["categoria"];
+               // var_dump($tmp_categoria);
+                $tmp_stock = $_POST["stock"];
+                $tmp_descripcion = $_POST["descripcion"];
+
+                $direccion_temporal = $_FILES["imagen"]["tmp_name"];
+                $nombre_imagen = $_FILES["imagen"]["name"];
+                move_uploaded_file($direccion_temporal, "../imagenes/$nombre_imagen");
+
+
+
+
+              //--------VALIDACIONES-------  
+                  //variable que suma los campos validados correctamente
+                  $contador = 0; 
+
+                  //------NOMBRE-------
+                  if($tmp_nombre == ""){
+                      $error_nombre = "El nombre no puede estar vacío";
+                  }else{
+                      if(strlen($tmp_nombre) < 2 || strlen($tmp_nombre) > 50 ){
+                          $error_nombre = "La longitud tiene que estar entre 1 y 50";
+                      }else{
+                          //letras, espacios en blanco y numeros
+                          $patron = "/^[a-zA-Z0-9\s]+$/";
+                          if(!preg_match($patron, $tmp_nombre)){
+                              $error_nombre = "El nombre solo puede contener letras, espacios en blanco y números";
+                          }else{
+                              $nombre = $tmp_nombre;
+                              $contador++;
+                          }
+                         
+                      }
+                  }
+  
+  
+                  //-----PRECIO------
+                  if($tmp_precio == ""){
+                      $error_precio = "El precio no puede estar vacío";
+                  }
+                  else {
+                      if(filter_var($tmp_precio, FILTER_VALIDATE_FLOAT)===false){
+                      $error_precio = "El valor debe ser un número entero o decimal";
+                      }
+                      else {
+                          $patron = "/^[0-9]{1,6}(\.[0-9]{1,2})?$/";   //parte entera minimo un digito que puede ser 0. parte decimal opcional
+                              if(!preg_match($patron, $tmp_precio)){
+                                  $error_precio = "Formato inválido, máximo de 6 cifras en la parte entera y 2 en la decimal. [111111.00]";
+                              }
+                          else{
+                              $precio = $tmp_precio;
+                              $contador++;
+                          }
+                      } 
+                  }
+                 
+  
+                  //------CATEGORIA------  
+                  if(empty($tmp_categoria)) { 
+                     $categoria = 'Alimentacion';  //le pongo esta por defecto, que existe en la bd
+                     $error_categoria = "Por favor, elija una categoría";
+                  } else {
+                      if(in_array($tmp_categoria, $categorias)){
+                          $categoria = $tmp_categoria; 
+                          $contador++;
+                      }
+                      else{
+                          $error_categoria = "la categoria no existe";
+                      }
+                  }
+  
+  
+  
+                  //var_dump($contador);
+                  //var_dump($categorias);
+  
+                 //---------STOCK-------
+                 if(!empty($tmp_stock)){
+                  //si no esta vacio puede contener una cosa que no sea numero
+                  //tengo que validar que sea int
+                      if (filter_var($tmp_stock, FILTER_VALIDATE_INT)===false){
+                          $error_stock = "El stock debe ser un numero entero";
+                      }else{
+                          $stock = $tmp_stock;
+                          $contador++;
+                      }
+                  } else{
+                      $stock = 0;
+                      $contador++;
+                  }
+                 
+  
+                  //------DESCRIPCION---------    
+                  if(empty($tmp_descripcion)){
+                      $error_descripcion = "la descripción no puede estar vacía";
+                  }else{
+                      if(strlen($tmp_descripcion) > 255){
+                          $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
+                      }else{
+                          $descripcion = $tmp_descripcion;
+                          $contador++;
+  
+                      }
+                  }
+
+                if($contador == 5){
+                    $sql = "UPDATE producto SET
+                    nombre = '$nombre',
+                    precio = $precio,
+                    categoria = '$categoria',
+                    stock = $stock,
+                    descripcion = '$descripcion',
+                    imagen = '../imagenes/$nombre_imagen'
+                WHERE id_producto = $id_producto";
+
+        $_conexion -> query($sql);
+                }
+               
+
+               
+            }
+
+            
+
            // echo "<h1>" . $_GET["id_producto"] . "</h1>";
 
             $id_producto = $_GET["id_producto"];
@@ -60,34 +176,47 @@
             $sql = "SELECT * FROM producto WHERE id_producto = '$id_producto'";
             $resultado = $_conexion -> query($sql);
             $producto = $resultado -> fetch_assoc(); //no hay que meterlo en while porque solo hay uno
+
+
+
+
+
+
         ?>
-        <form action="" method="post" enctype="multipart/form-data">
-        <div class="mb-3">
+       <form action="" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
                 <label class="form-label">Nombre</label>
                 <input class="form-control" name="nombre" type="text">
+                <?php if(isset($error_nombre)) echo "<span class='error'>$error_nombre</span>" ?>
             </div>
+            
             <div class="mb-3">
                 <label class="form-label">Categoria</label>
                 <select class="form-select" name="categoria">
-                    <option value="" selected disabled hidden>--- Elige una categoria ---</option>
+                    <option value="" selected  hidden>--- Elige una categoria ---</option>
                     <?php foreach($categorias as $categoria) { ?>
                         <option value="<?php echo $categoria ?>">
                             <?php echo $categoria ?>
                         </option>
                     <?php } ?>
                 </select>
+                <?php if(isset($error_categoria)) echo "<span class='error'>$error_categoria</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Precio</label>
                 <input class="form-control" name="precio" type="text">
+                <?php if(isset($error_precio)) echo "<span class='error'>$error_precio</span>" ?>
             </div>
+       
             <div class="mb-3">
                 <label class="form-label">Stock</label>
                 <input class="form-control" name="stock" type="text">
+                <?php if(isset($error_stock)) echo "<span class='error'>$error_stock</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" name="descripcion" type="text">
+                <?php if(isset($error_descripcion)) echo "<span class='error'>$error_descripcion</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Imagen</label>

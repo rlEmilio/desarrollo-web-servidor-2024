@@ -13,6 +13,20 @@
 
     require('../util/conexion.php');
     ?>
+
+<style>
+        .container{
+            max-width: 500px;
+        }
+
+      
+      
+      .error{
+          color:red;
+      }
+
+
+    </style>
 </head>
 
 <body>

@@ -18,6 +18,11 @@
             color:red;
         }
 
+        .container{
+            max-width: 500px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -59,11 +64,18 @@
                 if($tmp_nombre == ""){
                     $error_nombre = "El nombre no puede estar vacío";
                 }else{
-                    if(strlen($tmp_nombre) < 1 || strlen($tmp_nombre) > 50 ){
+                    if(strlen($tmp_nombre) < 2 || strlen($tmp_nombre) > 50 ){
                         $error_nombre = "La longitud tiene que estar entre 1 y 50";
                     }else{
-                        $nombre = $tmp_nombre;
-                        $contador++;
+                        //letras, espacios en blanco y numeros
+                        $patron = "/^[a-zA-Z0-9\s]+$/";
+                        if(!preg_match($patron, $tmp_nombre)){
+                            $error_nombre = "El nombre solo puede contener letras, espacios en blanco y números";
+                        }else{
+                            $nombre = $tmp_nombre;
+                            $contador++;
+                        }
+                       
                     }
                 }
 
@@ -77,7 +89,7 @@
                     $error_precio = "El valor debe ser un número entero o decimal";
                     }
                     else {
-                        $patron = "/^[0-9]{1,6}(\.[0-9]{1,2})?$/";
+                        $patron = "/^[0-9]{1,6}(\.[0-9]{1,2})?$/";   //parte entera minimo un digito que puede ser 0. parte decimal opcional
                             if(!preg_match($patron, $tmp_precio)){
                                 $error_precio = "Formato inválido, máximo de 6 cifras en la parte entera y 2 en la decimal. [111111.00]";
                             }
@@ -115,10 +127,12 @@
                     if (filter_var($tmp_stock, FILTER_VALIDATE_INT)===false){
                         $error_stock = "El stock debe ser un numero entero";
                     }else{
-                        $stock = $tmm_stock;
+                        $stock = $tmp_stock;
+                        $contador++;
                     }
                 } else{
                     $stock = 0;
+                    $contador++;
                 }
                
 
@@ -130,6 +144,7 @@
                         $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
                     }else{
                         $descripcion = $tmp_descripcion;
+                        $contador++;
 
                     }
                 }
