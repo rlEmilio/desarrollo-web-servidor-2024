@@ -36,20 +36,33 @@
 
           
             $categoria = $_POST["categoria"];
-            $descripcion = $_POST["descripcion"];
+            $tmp_descripcion = $_POST["descripcion"];
 
+            $contador=0;
 
+            //------DESCRIPCION---------    
+            if(empty($tmp_descripcion)){
+                $error_descripcion = "la descripción no puede estar vacía";
+            }else{
+                if(strlen($tmp_descripcion) > 255){
+                    $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
+                }else{
+                    $descripcion = $tmp_descripcion;
+                    $contador++;
 
-            $sql = "UPDATE categoria SET   
-                     
-                      descripcion = '$descripcion' 
-                 WHERE categoria = '$categoria'";
-
-            $_conexion->query($sql);
-
-            if (!$_conexion->query($sql)) {
-                echo "Error en la consulta: " . $_conexion->error;
+                }
             }
+
+            if($contador==1){
+                $sql = "UPDATE categoria SET   
+                     
+                descripcion = '$descripcion' 
+           WHERE categoria = '$categoria'";
+
+      $_conexion->query($sql);
+            }
+          
+
         }
 
      
@@ -66,6 +79,7 @@
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" name="descripcion" type="text">
+                <?php if(isset($error_descripcion)) echo "<span class='error'>$error_descripcion</span>" ?>
             </div>
           
             <div class="mb-3">
