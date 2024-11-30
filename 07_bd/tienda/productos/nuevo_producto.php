@@ -30,7 +30,7 @@
         <?php
       
 
-            $sql = "SELECT * FROM categoria ORDER BY categoria";
+            $sql = "SELECT * FROM categorias ORDER BY categoria";
             $resultado = $_conexion -> query($sql);
             $categorias = [];
 
@@ -122,14 +122,17 @@
 
                //---------STOCK-------
                if(!empty($tmp_stock)){
-                //si no esta vacio puede contener una cosa que no sea numero
-                //tengo que validar que sea int
-                    if (filter_var($tmp_stock, FILTER_VALIDATE_INT)===false){
-                        $error_stock = "El stock debe ser un numero entero";
+                    if($tmp_stock>999){
+                        $error_stock = "Has superado el límite de stock";
                     }else{
-                        $stock = $tmp_stock;
-                        $contador++;
+                        if (filter_var($tmp_stock, FILTER_VALIDATE_INT)===false){
+                            $error_stock = "El stock debe ser un numero entero";
+                        }else{
+                            $stock = $tmp_stock;
+                            $contador++;
+                        }
                     }
+                    
                 } else{
                     $stock = 0;
                     $contador++;
@@ -153,10 +156,8 @@
 
                 
 
-
-
                 if($contador == 5){
-                    $sql = "INSERT INTO producto 
+                    $sql = "INSERT INTO productos 
                     (nombre, precio, categoria, stock, imagen, descripcion)
                     VALUES
                     ('$nombre', $precio, '$categoria', $stock, '../imagenes/$nombre_imagen', '$descripcion')            
@@ -172,6 +173,7 @@
                 
             }
         ?>
+        <br><br>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Nombre</label>

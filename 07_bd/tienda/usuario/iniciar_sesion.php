@@ -34,7 +34,7 @@
     $contrasena = $_POST["contrasena"];
 
 
-    $sql = "select * from usuario where usuario = '$usuario'";
+    $sql = "select * from usuarios where usuario = '$usuario'";
    
     $resultado = $_conexion -> query($sql);
   
@@ -45,13 +45,14 @@
         $info_usuario = $resultado -> fetch_assoc();
         $acceso_concedido = password_verify($contrasena, $info_usuario["contrasena"]);
         if(!$acceso_concedido){
-            echo "<h2>Acceso denegado</h2>";
+            $error_contrasena = "Acceso denegado";
         }else{
             echo "<h2>Acceso concedido</h2>";
 
             //iniciamos sesion con el usuario introducido en el formulario y redirigimos al index
             session_start();
             $_SESSION["usuario"] = $usuario;
+            $_SESSION['contrasena'] = $info_usuario["contrasena"];
             header("location: ../index.php");
             exit;
         }
@@ -73,6 +74,7 @@
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
                 <input class="form-control" name="contrasena" type="password">
+                <?php if(isset($error_contrasena)) echo "<span class='error'>$error_contrasena</span>" ?>
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Iniciar sesión">

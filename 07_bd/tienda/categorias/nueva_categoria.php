@@ -51,11 +51,16 @@
                 if(empty($tmp_categoria)){
                     $error_categoria = "la categoria no puede estar vacía";
                 }else{
-                    if(strlen($tmp_categoria)>30){
-                        $error_categoria = "la categoria no puede superar los 30 carácteres";
+                    if(strlen($tmp_categoria)<2 || strlen($tmp_categoria)>30){
+                        $error_categoria = "la categoria debe tener entre 2 y 30 caracteres";
                     }else{
+                        $patron = "/^[a-zA-Z\s]+$/";
+                        if(!preg_match($patron, $tmp_categoria)){
+                            $error_categoria = "la categoria solo puede tener letras y espacios en blanco";
+                        }else{
+
                         //aqui voy a comprobar si la categoria ya existe
-                        $sql = "select * from categoria where categoria = '$tmp_categoria'";
+                        $sql = "select * from categorias where categoria = '$tmp_categoria'";
                         $resultado = $_conexion -> query($sql);
                         if($resultado -> num_rows > 0 ){
                             $error_categoria = "La categoría ya existe, elige otro nombre";
@@ -63,6 +68,8 @@
                             $categoria = $tmp_categoria;
                             $contador++;
                         }
+                        }
+
 
                     }
                 }
@@ -82,7 +89,7 @@
 
 
                if($contador==2){
-                $sql = "INSERT INTO categoria 
+                $sql = "INSERT INTO categorias 
                 (categoria, descripcion)
                 VALUES
                 ('$categoria', '$descripcion')            
@@ -97,6 +104,7 @@
                 
             }
         ?>
+        <br><br>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Categoria</label>

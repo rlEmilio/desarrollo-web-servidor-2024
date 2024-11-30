@@ -30,7 +30,7 @@
     <div class="container">
         <?php
 
-            $sql = "SELECT * FROM categoria ORDER BY categoria";
+            $sql = "SELECT * FROM categorias ORDER BY categoria";
             $resultado = $_conexion -> query($sql);
             $categorias = [];
 
@@ -151,7 +151,7 @@
                   }
 
                 if($contador == 5){
-                    $sql = "UPDATE producto SET
+                    $sql = "UPDATE productos SET
                     nombre = '$nombre',
                     precio = $precio,
                     categoria = '$categoria',
@@ -173,7 +173,7 @@
 
             $id_producto = $_GET["id_producto"];
             
-            $sql = "SELECT * FROM producto WHERE id_producto = '$id_producto'";
+            $sql = "SELECT * FROM productos WHERE id_producto = '$id_producto'";
             $resultado = $_conexion -> query($sql);
             $producto = $resultado -> fetch_assoc(); //no hay que meterlo en while porque solo hay uno
 
@@ -183,6 +183,7 @@
 
 
         ?>
+        <br><br>
        <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Nombre</label>

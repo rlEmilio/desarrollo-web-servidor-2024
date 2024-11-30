@@ -23,20 +23,22 @@
 </head>
 <body>
     <div class="container">
+        <br><br>
         <h1>Listado de productos</h1>
         <?php
             if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $id_producto = $_POST["id_producto"];
                 //echo "<h1>$id_anime</h1>";
-                $sql = "DELETE FROM producto WHERE id_producto = '$id_producto'";
+                $sql = "DELETE FROM productos WHERE id_producto = '$id_producto'";
                 $_conexion -> query($sql);
             }
 
-            $sql = "SELECT * FROM producto";
+            $sql = "SELECT * FROM productos";
             $resultado = $_conexion -> query($sql);
         ?>
          <br>
-        <a class="btn btn-secondary" href="nuevo_producto.php">Nuevo producto</a><br><br>
+        <a class="btn btn-secondary" href="nuevo_producto.php">Nuevo producto</a>
+        <a class="btn btn-secondary" href="../index.php">Volver</a><br><br>
         
         <table class="table table-dark table-striped">
             <thead class="table-info">

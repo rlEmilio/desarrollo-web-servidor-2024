@@ -20,7 +20,6 @@
         }
 
       
-      
       .error{
           color:red;
       }
@@ -54,7 +53,7 @@
             }
 
             if($contador==1){
-                $sql = "UPDATE categoria SET   
+                $sql = "UPDATE categorias SET   
                      
                 descripcion = '$descripcion' 
            WHERE categoria = '$categoria'";
@@ -69,10 +68,11 @@
      
         $categoria = $_GET["categoria"];
 
-        $sql = "SELECT * FROM categoria WHERE categoria = '$categoria'";
+        $sql = "SELECT * FROM categorias WHERE categoria = '$categoria'";
         $resultado = $_conexion->query($sql);
         $categoria = $resultado->fetch_assoc(); //no hay que meterlo en while porque solo hay uno
         ?>
+        <br><br>
         <form action="" method="post" enctype="multipart/form-data">
       
        
