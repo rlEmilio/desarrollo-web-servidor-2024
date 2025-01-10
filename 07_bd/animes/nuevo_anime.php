@@ -37,23 +37,24 @@
                 $nombre_imagen = $_FILES["imagen"]["name"];
                 move_uploaded_file($direccion_temporal, "../imagenes/$nombre_imagen");
 
-                $sql = "INSERT INTO animes 
+                $imagen = "../imagenes/$nombre_imagen";
+
+                $sql = $_conexion -> prepare("INSERT INTO animes 
                     (titulo, nombre_estudio, anno_estreno, num_temporadas, imagen)
-                    VALUES
-                    ('$titulo', '$nombre_estudio', $anno_estreno, $num_temporadas, 
-                        '../imagenes/$nombre_imagen')
-                ";
+                    VALUES (?, ?, ?, ?, ?)");
+                
 
-                $_conexion -> query($sql);
+               $sql -> bind_param("ssiis", $titulo, 
+               $nombre_estudio,
+                $anno_estreno, 
+                $num_temporadas,
+                $imagen);
 
-                /**
-                 * INSERT INTO animes
-                 *  (titulo, nombre_estudio, anno_estreno, num_temporadas)
-                 * VALUES
-                 *  ('Doraemon', 'Toei Animation', 1979, 1);
-                 * 
-                 */
 
+               $sql -> execute();
+
+              
+            
                 
             }
         ?>
