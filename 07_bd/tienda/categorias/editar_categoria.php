@@ -13,6 +13,19 @@
 
     require('../util/conexion.php');
     ?>
+
+<style>
+        .container{
+            max-width: 500px;
+        }
+
+      
+      .error{
+          color:red;
+      }
+
+
+    </style>
 </head>
 
 <body>
@@ -22,36 +35,51 @@
 
           
             $categoria = $_POST["categoria"];
-            $descripcion = $_POST["descripcion"];
+            $tmp_descripcion = $_POST["descripcion"];
 
+            $contador=0;
 
+            //------DESCRIPCION---------    
+            if(empty($tmp_descripcion)){
+                $error_descripcion = "la descripción no puede estar vacía";
+            }else{
+                if(strlen($tmp_descripcion) > 255){
+                    $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
+                }else{
+                    $descripcion = $tmp_descripcion;
+                    $contador++;
 
-            $sql = "UPDATE categoria SET   
-                     
-                      descripcion = '$descripcion' 
-                 WHERE categoria = '$categoria'";
-
-            $_conexion->query($sql);
-
-            if (!$_conexion->query($sql)) {
-                echo "Error en la consulta: " . $_conexion->error;
+                }
             }
+
+            if($contador==1){
+                $sql = "UPDATE categorias SET   
+                     
+                descripcion = '$descripcion' 
+           WHERE categoria = '$categoria'";
+
+      $_conexion->query($sql);
+            }
+          
+
         }
 
      
      
         $categoria = $_GET["categoria"];
 
-        $sql = "SELECT * FROM categoria WHERE categoria = '$categoria'";
+        $sql = "SELECT * FROM categorias WHERE categoria = '$categoria'";
         $resultado = $_conexion->query($sql);
         $categoria = $resultado->fetch_assoc(); //no hay que meterlo en while porque solo hay uno
         ?>
+        <br><br>
         <form action="" method="post" enctype="multipart/form-data">
       
        
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" name="descripcion" type="text">
+                <?php if(isset($error_descripcion)) echo "<span class='error'>$error_descripcion</span>" ?>
             </div>
           
             <div class="mb-3">

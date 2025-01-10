@@ -10,6 +10,12 @@
         ini_set( "display_errors", 1 ); 
         
         require('../util/conexion.php');
+
+        session_start();
+        if(!isset($_SESSION["usuario"])){
+            header("location: ../usuario/iniciar_sesion.php");
+            exit;
+        }
     ?>
    
     
@@ -17,20 +23,22 @@
 </head>
 <body>
     <div class="container">
+        <br><br>
         <h1>Categorias</h1>
         <?php
             if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $categoria= $_POST["categoria"];
 
-                $sql = "DELETE FROM categoria WHERE categoria = '$categoria'";
+                $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
                 $_conexion -> query($sql);
             }
 
-            $sql = "SELECT * FROM categoria";
+            $sql = "SELECT * FROM categorias";
             $resultado = $_conexion -> query($sql);
         ?>
          <br>
-        <a class="btn btn-secondary" href="nueva_categoria.php">Nueva Categoria</a><br><br>
+        <a class="btn btn-secondary" href="nueva_categoria.php">Nueva Categoria</a>
+        <a class="btn btn-secondary" href="../index.php">Volver</a><br><br>
         
         <table class="table table-dark table-striped">
             <thead class="table-info">

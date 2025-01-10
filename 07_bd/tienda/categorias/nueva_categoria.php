@@ -17,6 +17,13 @@
             max-width: 500px;
         }
 
+      
+      
+      .error{
+          color:red;
+      }
+
+
     </style>
 </head>
 <body>
@@ -28,32 +35,87 @@
            
 
             if($_SERVER["REQUEST_METHOD"] == "POST") {
-                $categoria = $_POST["categoria"];
-                $descripcion = $_POST["descripcion"];
+                var_dump($_POST);
+                $tmp_categoria = $_POST["categoria"];
+                $tmp_descripcion = $_POST["descripcion"];
                 
-               
-                $sql = "INSERT INTO categoria 
-                    (categoria, descripcion)
-                    VALUES
-                    ('$categoria', '$descripcion')            
-                ";
 
-                $_conexion -> query($sql);
+                //VALIDACIONES
 
+                $contador=0;
+
+ 
+
+                //---------CATEGORIA--------
+
+                if(empty($tmp_categoria)){
+                    $error_categoria = "la categoria no puede estar vacía";
+                }else{
+                    if(strlen($tmp_categoria)<2 || strlen($tmp_categoria)>30){
+                        $error_categoria = "la categoria debe tener entre 2 y 30 caracteres";
+                    }else{
+                        $patron = "/^[a-zA-Z\s]+$/";
+                        if(!preg_match($patron, $tmp_categoria)){
+                            $error_categoria = "la categoria solo puede tener letras y espacios en blanco";
+                        }else{
+
+                        //aqui voy a comprobar si la categoria ya existe
+                        $sql = "select * from categorias where categoria = '$tmp_categoria'";
+                        $resultado = $_conexion -> query($sql);
+                        if($resultado -> num_rows > 0 ){
+                            $error_categoria = "La categoría ya existe, elige otro nombre";
+                        }else{
+                            $categoria = $tmp_categoria;
+                            $contador++;
+                        }
+                        }
+
+
+                    }
+                }
+
+                //------DESCRIPCION---------    
+                if(empty($tmp_descripcion)){
+                    $error_descripcion = "la descripción no puede estar vacía";
+                }else{
+                    if(strlen($tmp_descripcion) > 255){
+                        $error_descripcion = "La descripción no puede ser mayor a 255 carácteres";
+                    }else{
+                        $descripcion = $tmp_descripcion;
+                        $contador++;
+
+                    }
+                }
+
+
+               if($contador==2){
+                $sql = "INSERT INTO categorias 
+                (categoria, descripcion)
+                VALUES
+                ('$categoria', '$descripcion')            
+            ";
+
+            $_conexion -> query($sql);
+
+               }
+              
               
 
                 
             }
         ?>
+        <br><br>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Categoria</label>
                 <input class="form-control" name="categoria" type="text">
+                <?php if(isset($error_categoria)) echo "<span class='error'>$error_categoria</span>" ?>
             </div>
            
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" name="descripcion" type="text">
+                <?php if(isset($error_descripcion)) echo "<span class='error'>$error_descripcion</span>" ?>
             </div>
           
             <div class="mb-3">
