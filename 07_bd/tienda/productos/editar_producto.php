@@ -17,8 +17,7 @@
             max-width: 500px;
         }
 
-      
-      
+    
       .error{
           color:red;
       }
@@ -80,7 +79,7 @@
                       }
                   }
   
-  
+                  
                   //-----PRECIO------
                   if($tmp_precio == ""){
                       $error_precio = "El precio no puede estar vacío";

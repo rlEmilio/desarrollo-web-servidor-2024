@@ -44,11 +44,11 @@
                     VALUES (?, ?, ?, ?, ?)");
                 
 
-               $sql -> bind_param("ssiis", $titulo, 
+               $sql -> bind_params("ssiis", $titulo, 
                $nombre_estudio,
                 $anno_estreno, 
                 $num_temporadas,
-                $imagen);
+                $nombre_imagen);
 
 
                $sql -> execute();
