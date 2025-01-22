@@ -32,10 +32,21 @@
     }
 
     function manejarGet($_conexion){
-        //echo json_encode(["metodo" => "get"]);
-        $sql = "select * from animes";
-        $stm = $_conexion -> prepare($sql);
-        $stm -> execute();
+     
+        if (isset($_GET["estudio"])) {
+            $sql = "select * from animes where nombre_estudio = :estudio ";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute([
+                "estudio" => $_GET['estudio'],
+
+            ]);
+            
+        }else{
+            $sql = "select * from animes";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute();
+           
+        }
         $resultado = $stm -> fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
 

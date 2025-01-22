@@ -113,7 +113,7 @@
             ?>
                 <td>
                     <!--cambio la ruta de imagen de ../ a ./ -->
-                    <img width="100px" heigth="100px" src="<?php echo str_replace("../", "./", $fila["imagen"]) ?>">
+                    <img width="100px" heigth="100px" src="<?php echo (".".$fila["imagen"]) ?>">
                 </td>
             <?php
                 echo "</tr>";

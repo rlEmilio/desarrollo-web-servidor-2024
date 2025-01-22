@@ -33,11 +33,45 @@
 
     function manejarGet($_conexion){
         //echo json_encode(["metodo" => "get"]);
-        $sql = "select * from estudios";
-        $stm = $_conexion -> prepare($sql);
-        $stm -> execute();
+      
+
+        if ((isset($_GET["ciudad"]))&&(isset($_GET["anno_fundacion"]))) {
+            $sql = "select * from estudios where anno_fundacion = :anno_fundacion and ciudad = :ciudad ";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute([
+                 "anno_fundacion" => $_GET['anno_fundacion'],
+                 "ciudad" => $_GET['ciudad'],
+    
+                ]);
+        }
+
+       else if (isset($_GET["anno_fundacion"])) {
+            $sql = "select * from estudios where anno_fundacion = :anno_fundacion ";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute([
+                 "anno_fundacion" => $_GET['anno_fundacion'],
+    
+                ]);
+        
+            
+        }else if(isset($_GET["ciudad"])){
+            $sql = "select * from estudios where ciudad = :ciudad ";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute([
+                "ciudad" => $_GET['ciudad'],
+
+            ]);
+        }
+    
+        else{
+            $sql = "select * from estudios";
+            $stm = $_conexion -> prepare($sql);
+            $stm -> execute();
+           
+        }
         $resultado = $stm -> fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($resultado);
+       
 
 
     }
