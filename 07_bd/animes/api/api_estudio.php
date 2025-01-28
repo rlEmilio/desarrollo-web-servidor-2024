@@ -73,7 +73,6 @@
         echo json_encode($resultado);
        
 
-
     }
     function manejarPost($_conexion, $entrada ){
        //echo json_encode(["metodo" => "post"]);
