@@ -74,25 +74,28 @@
     ; ?>
 
     <!-- Animes relacionados -->
-
     <br>
     <br>
     <?php
     $tamano = count($animes["relations"]);
 
     echo "Animes relacionados<br>";
-    for ($i = 0; $i < $tamano; $i++) { ?>
-        <?php for ($j = 0; $j < count($animes["relations"]["$i"]["entry"]); $j++) {
 
-            if ($animes["relations"]["$i"]["entry"]["$j"]["type"] != "manga") {
-                echo $animes["relations"]["$i"]["entry"]["$j"]["name"];
-            } ?>
-            <br>
 
-        <?php }
-        ;}; ?>
-  
- 
+    foreach ($animes["relations"] as $relaciones) {
+        
+        foreach ($relaciones["entry"] as $entradas) {
+            if($entradas["type"]!= "manga"){
+                echo "<br>".$entradas["name"];
+            }
+            
+        }
+        ;
+    }
+    ;
+    ?>
+
+
 
 
 
