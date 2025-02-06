@@ -21,7 +21,6 @@
             margin: 0;
 
         }
-
         select,
         input {
             font-size: 25px;
@@ -94,7 +93,6 @@
                         foreach ($subraza as $subrazas) {
                             echo "<option value='$raza/$subrazas'>" . ucfirst($raza) . " " . ucfirst($subrazas) . "</option>";
                         }
-
                     }
                 } ?>
             </select>
