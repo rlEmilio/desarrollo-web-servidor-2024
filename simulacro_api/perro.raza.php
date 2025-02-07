@@ -8,6 +8,8 @@
 <body>
 <?php
 
+
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
@@ -22,18 +24,23 @@ $url = "https://dog.ceo/api/breeds/list/all";
     $datos = json_decode($respuesta, true);
     $razas = $datos; 
 
-   
+    foreach($razas["message"] as $raza){
+        echo key($raza);
+        foreach($raza as $nombre){
+            if ($raza == "") {
+            echo $raza."<br>";
+            }
+            echo $nombre."<br>";
+        }
+    }
 
 ?>
 
-<form action="" method="get">
+<!--<form action="" method="get">
 <select name="perro" id="">
-    <?php for ($i = 0; $i < count($razas); $i++){?>
-       <option value=""><?php echo $razas["message"][$i] ?> </option> 
-        
-   <?php }; ?>
+   
 </select>
 
-</form>
+</form>-->
 </body>
 </html>

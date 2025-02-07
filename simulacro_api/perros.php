@@ -23,9 +23,7 @@ $url = "https://dog.ceo/api/breeds/image/random";
     curl_close($curl);
 
     $datos = json_decode($respuesta, true);
-    $imagen = $datos;
-
-    
+    $imagen = $datos; 
 
 ?>
 <img src="<?php echo $imagen["message"] ?>" alt="No se encuentra la imagen"> 
