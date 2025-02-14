@@ -44,7 +44,7 @@
                     VALUES (?, ?, ?, ?, ?)");
                 
 
-               $sql -> bind_params("ssiis", $titulo, 
+               $sql -> bind_param("ssiis", $titulo, 
                $nombre_estudio,
                 $anno_estreno, 
                 $num_temporadas,
