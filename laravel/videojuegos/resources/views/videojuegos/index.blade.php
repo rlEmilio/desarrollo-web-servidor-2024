@@ -23,6 +23,7 @@
                     <td>{{ $videojuego -> nombre}}</td>
                     <td>{{ $videojuego -> pegi }}</td>
                     <td>{{ $videojuego -> genero}}</td>
+                
                 </tr>
             @endforeach
         </tbody>
